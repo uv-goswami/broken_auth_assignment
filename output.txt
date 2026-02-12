@@ -1,0 +1,18 @@
+assignment/broken_auth_assignment$ curl -X POST http://localhost:3000/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"yuvrajgoswamigir@gmail.com","password":"password123"}'
+{"message":"OTP sent","loginSessionId":"bflgt"}
+
+
+assignment/broken_auth_assignment$ curl -c cookies.txt -X POST http://localhost:3000/auth/verify-otp \
+  -H "Content-Type: application/json" \
+  -d '{"loginSessionId":"bflgt","otp":"381543"}'
+{"message":"OTP verified","sessionId":"bflgt"}
+
+
+assignment/broken_auth_assignment$ curl -b cookies.txt -X POST http://localhost:3000/auth/token
+{"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inl1dnJhamdvc3dhbWlnaXJAZ21haWwuY29tIiwic2Vzc2lvbklkIjoiYmZsZ3QiLCJpYXQiOjE3NzA4OTY3MTAsImV4cCI6MTc3MDg5NzYxMH0.ysR107c-yEC-x3L__4IzAdZ8jcsqCT1-uo3e3f86Gjw","expires_in":900}
+
+
+assignment/broken_auth_assignment$ curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inl1dnJhamdvc3dhbWlnaXJAZ21haWwuY29tIiwic2Vzc2lvbklkIjoiYmZsZ3QiLCJpYXQiOjE3NzA4OTY3MTAsImV4cCI6MTc3MDg5NzYxMH0.ysR107c-yEC-x3L__4IzAdZ8jcsqCT1-uo3e3f86Gjw" http://localhost:3000/protected
+{"message":"Access granted","user":{"email":"yuvrajgoswamigir@gmail.com","sessionId":"bflgt","iat":1770896710,"exp":1770897610},"success_flag":"FLAG-eXV2cmFqZ29zd2FtaWdpckBnbWFpbC5jb21fQ09NUExFVEVEX0FTU0lHTk1FTlQ="}
